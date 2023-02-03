@@ -17,7 +17,7 @@ pokelist = [
 Pokemon("Nussasam", 100, 140, 20),
 Pokemon("Stullkacku", 120, 120, 35),
 Pokemon("Dumbidor", 60, 70, 25),
-Pokemon("Strongitor", 500, 50, 50),
+Pokemon("Strongitor", 200, 50, 50),
 Pokemon("Nomitatos", 100, 100, 25)
 ]
 
@@ -66,9 +66,6 @@ bestatt = ptwoattlist[sortindex]
 
 
 
-
-
-
 # Definition eines Standartkampfes, mit Acc.
 
 def fightresult(def_hp : int , att_ap : int, def_dp : int, att_acc : int) -> int:
@@ -81,9 +78,12 @@ def fightresult(def_hp : int , att_ap : int, def_dp : int, att_acc : int) -> int
      if hit > 0:
          def_hp = def_hp
          print("Daneben")
+     elif def_dp > att_ap:
+         def_hp = def_hp
+         print("Geblockt")
      else:
-         def_hp = def_hp - (att_ap - def_dp)
-         print("Treffer")
+        def_hp = def_hp - (att_ap - def_dp)
+        print("Treffer")
      return def_hp
 
 
@@ -98,24 +98,27 @@ def fightresult(def_hp : int , att_ap : int, def_dp : int, att_acc : int) -> int
 # Umzuschreiben des Codes die Änderungen nötig
 
 if tlpm.speed > tlpm2.speed:
+    print("Random-Angriff beginnt")
     while tlpm.hp > 0 and tlpm2.hp > 0:
         rdmatt = random.choice(poneattlist)
         while rdmatt.pp == 0:
             rdmatt = random.choice(poneattlist)
         tlpm.hp = fightresult(tlpm.hp, rdmatt.ap, tlpm.dp, rdmatt.acc)
         rdmatt.pp = rdmatt.pp - 1
-        print("Angriff mit: " + rdmatt.name + " Angriffswert: ", rdmatt.ap, "Angriffsgenauigkeit: ", rdmatt.acc, "Rest-PP: ", rdmatt.pp)
+        print("Ramdom-Angriff mit: " + rdmatt.name + " Angriffswert: ", rdmatt.ap, "Angriffsgenauigkeit: ", rdmatt.acc, "Rest-PP: ", rdmatt.pp)
         print("HP: " + tlpm.name, tlpm.hp)
-        bestatt = ptwoattlist[sortindex]
-        tlpm2.hp = fightresult(tlpm2.hp, bestatt.ap, tlpm2.dp, bestatt.acc)
-        if bestatt.pp == 0:
-            sortindex = sortindex + 1
+        if tlpm.hp > 0:
             bestatt = ptwoattlist[sortindex]
-        bestatt.pp = bestatt.pp - 1
-        print("Angriff mit: " + bestatt.name + " Angriffswert: ", bestatt.ap, "Angriffsgenauigkeit: ", bestatt.acc, "Rest-PP: ", bestatt.pp)
-        print("HP: " + tlpm2.name, tlpm2.hp)
+            tlpm2.hp = fightresult(tlpm2.hp, bestatt.ap, tlpm2.dp, bestatt.acc)
+            if bestatt.pp == 0:
+                sortindex = sortindex + 1
+                bestatt = ptwoattlist[sortindex]
+            bestatt.pp = bestatt.pp - 1
+            print("Bester Angriff mit: " + bestatt.name + " Angriffswert: ", bestatt.ap, "Angriffsgenauigkeit: ", bestatt.acc, "Rest-PP: ", bestatt.pp)
+            print("HP: " + tlpm2.name, tlpm2.hp)
 
 elif tlpm2.speed > tlpm.speed:
+    print("Bester Angriff beginnt")
     while tlpm.hp > 0 and tlpm2.hp > 0:
         bestatt = ptwoattlist[sortindex]
         tlpm2.hp = fightresult(tlpm2.hp, bestatt.ap, tlpm2.dp, bestatt.acc)
@@ -123,32 +126,35 @@ elif tlpm2.speed > tlpm.speed:
             sortindex = sortindex + 1
             bestatt = ptwoattlist[sortindex]
         bestatt.pp = bestatt.pp - 1
-        print("Angriff mit: " + bestatt.name + " Angriffswert: ", bestatt.ap, "Angriffsgenauigkeit: ", bestatt.acc, "Rest-PP: ", bestatt.pp)
+        print("Bester Angriff mit: " + bestatt.name + " Angriffswert: ", bestatt.ap, "Angriffsgenauigkeit: ", bestatt.acc, "Rest-PP: ", bestatt.pp)
         print("HP: " + tlpm2.name, tlpm2.hp)
-        rdmatt = random.choice(poneattlist)
-        while rdmatt.pp == 0:
-            rdmatt = random.choice(poneattlist)
-        tlpm.hp = fightresult(tlpm.hp, rdmatt.ap, tlpm.dp, rdmatt.acc)
-        rdmatt.pp = rdmatt.pp - 1
-        print("Angriff mit: " + rdmatt.name + " Angriffswert: ", rdmatt.ap, "Angriffsgenauigkeit: ", rdmatt.acc, "Rest-PP: ", rdmatt.pp)
-        print("HP: " + tlpm.name, tlpm.hp)
+        if tlpm2.hp > 0:
+             rdmatt = random.choice(poneattlist)
+             while rdmatt.pp == 0:
+                 rdmatt = random.choice(poneattlist)
+             tlpm.hp = fightresult(tlpm.hp, rdmatt.ap, tlpm.dp, rdmatt.acc)
+             rdmatt.pp = rdmatt.pp - 1
+             print("Random-Angriff mit: " + rdmatt.name + " Angriffswert: ", rdmatt.ap, "Angriffsgenauigkeit: ", rdmatt.acc, "Rest-PP: ", rdmatt.pp)
+             print("HP: " + tlpm.name, tlpm.hp)
 else:
+    print("Random-Angriff beginnt")
     while tlpm.hp > 0 and tlpm2.hp > 0:
         rdmatt = random.choice(poneattlist)
         while rdmatt.pp == 0:
             rdmatt = random.choice(poneattlist)
         tlpm.hp = fightresult(tlpm.hp, rdmatt.ap, tlpm.dp, rdmatt.acc)
         rdmatt.pp = rdmatt.pp - 1
-        print("Angriff mit: " + rdmatt.name + " Angriffswert: ", rdmatt.ap, "Angriffsgenauigkeit: ", rdmatt.acc, "Rest-PP: ", rdmatt.pp)
+        print("Random-Angriff mit: " + rdmatt.name + " Angriffswert: ", rdmatt.ap, "Angriffsgenauigkeit: ", rdmatt.acc, "Rest-PP: ", rdmatt.pp)
         print("HP: " + tlpm.name, tlpm.hp)
-        bestatt = ptwoattlist[sortindex]
-        tlpm2.hp = fightresult(tlpm2.hp, bestatt.ap, tlpm2.dp, bestatt.acc)
-        if bestatt.pp == 0:
-            sortindex = sortindex + 1
+        if tlpm.hp > 0:
             bestatt = ptwoattlist[sortindex]
-        bestatt.pp = bestatt.pp - 1
-        print("Angriff mit: " + bestatt.name + " Angriffswert: ", bestatt.ap, "Angriffsgenauigkeit: ", bestatt.acc, "Rest-PP: ", bestatt.pp)
-        print("HP: " + tlpm2.name, tlpm2.hp)
+            tlpm2.hp = fightresult(tlpm2.hp, bestatt.ap, tlpm2.dp, bestatt.acc)
+            if bestatt.pp == 0:
+                sortindex = sortindex + 1
+                bestatt = ptwoattlist[sortindex]
+            bestatt.pp = bestatt.pp - 1
+            print("Bester Angriff mit: " + bestatt.name + " Angriffswert: ", bestatt.ap, "Angriffsgenauigkeit: ", bestatt.acc, "Rest-PP: ", bestatt.pp)
+            print("HP: " + tlpm2.name, tlpm2.hp)
 
 if tlpm.hp <= 0:
     print(" ")
