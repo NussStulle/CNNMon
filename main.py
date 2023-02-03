@@ -152,7 +152,7 @@ else:
 
 if tlpm.hp <= 0:
     print(" ")
-    print( tlpm2.name + " hat gewonnen")
+    print( "Bester Angriff hat mit " + tlpm2.name + " gewonnen")
 else:
     print(" ")
-    print( tlpm.name + " hat gewonnen")
+    print( "Random-Angriff hat mit " + tlpm.name + " gewonnen")
